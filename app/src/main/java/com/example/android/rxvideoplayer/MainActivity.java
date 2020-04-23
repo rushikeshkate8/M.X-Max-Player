@@ -49,9 +49,7 @@ public class MainActivity extends AppCompatActivity {
             permission = true;
             getFileList(directory);
             videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
-            videoAdapter.setHasStableIds(true);
             videoList.setAdapter(videoAdapter);
-
         }
     }
 
