@@ -2,11 +2,18 @@ package com.example.android.rxvideoplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
+
+import java.io.File;
+import java.net.URLConnection;
 
 public class videoPlayerActivity extends AppCompatActivity {
     VideoView videoView;
@@ -27,7 +34,10 @@ public class videoPlayerActivity extends AppCompatActivity {
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
-        videoView.setVideoPath(String.valueOf(MainActivity.fileArrayList.get(position)));
+        if(position != -1)
+          videoView.setVideoPath(String.valueOf(MainActivity.fileArrayList.get(position)));
+        else
+            playMedia();
         videoView.requestFocus();
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -48,5 +58,13 @@ public class videoPlayerActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         videoView.stopPlayback();
+    }
+    /**
+     * This method is called when the user clicks the button to play the toady's
+     * special video
+     */
+    public void playMedia() {
+        Uri file =  getIntent().getData();
+        videoView.setVideoURI(file);
     }
 }

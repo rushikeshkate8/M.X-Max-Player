@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
@@ -22,12 +23,14 @@ public class MainActivity extends AppCompatActivity {
     boolean permission;
     public static int REQUEST_PERMISSION = 1;
     public static ArrayList<File> fileArrayList = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         videoList = findViewById(R.id.video_list);
+        videoList.setItemViewCacheSize(20);
+        videoList.setDrawingCacheEnabled(true);
+        videoList.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
         // to read media from internal and external memory
         directory = new File("/mnt/");
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
@@ -46,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
             permission = true;
             getFileList(directory);
             videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
+            videoAdapter.setHasStableIds(true);
             videoList.setAdapter(videoAdapter);
+
         }
     }
 
@@ -82,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     permission = false;
-                    if(fileList[i].getName().endsWith(".mp4"))
+                    if(fileList[i].getName().endsWith(".mp4") || fileList[i].getName().endsWith(".3gp"))
                     {
                         for(int j = 0; j < fileArrayList.size(); j++)
                         {
