@@ -1,9 +1,13 @@
 package com.example.android.rxvideoplayer;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> {
@@ -40,9 +50,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> {
     public void onBindViewHolder(@NonNull final VideoHolder holder, int position) {
          // for seting the file name
           holder.mFileName.setText(MainActivity.fileArrayList.get(position).getName());
-          // for setting the thumbnail
-        Bitmap bitmapThumbnail = ThumbnailUtils.createVideoThumbnail(videoArrayList.get(position).getPath(), MediaStore.Images.Thumbnails.MINI_KIND);
-        holder.mVideoThumbnail.setImageBitmap(bitmapThumbnail);
+          // for setting the thumbnail. glide is a framework for fast image/ gifs loading
+        Glide .with(context) .asBitmap() .load(Uri.fromFile(new File(MainActivity.fileArrayList.get(position).getPath()))) . into(holder.mVideoThumbnail);
        holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

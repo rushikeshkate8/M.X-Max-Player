@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
             videoList.setAdapter(videoAdapter);
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     permission = false;
                     if(fileList[i].getName().endsWith(".mp4") || fileList[i].getName().endsWith(".3gp"))
                     {
-                        for(int j = 0; j < fileArrayList.size(); j++)
+                        /*for(int j = 0; j < fileArrayList.size(); j++)
                         {
                             if(fileArrayList.get(j).getName().equals((fileList[i].getName())))   //can be removed
                             {
@@ -103,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
                             permission = false;
                         }
                         else
-                        {
+                        {*/
                             fileArrayList.add(fileList[i]);
-                        }
+
 
                     }
                 }

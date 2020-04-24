@@ -13,4 +13,5 @@ tools:context=".videoPlayerActivity">
     android:id="@+id/videoPlayer"
     android:keepScreenOn="true"
     android:gravity = "center"/>
+
 </RelativeLayout>

@@ -37,7 +37,8 @@ public class videoPlayerActivity extends AppCompatActivity {
         if(position != -1)
           videoView.setVideoPath(String.valueOf(MainActivity.fileArrayList.get(position)));
         else
-            playMedia();
+            setPath();
+
         videoView.requestFocus();
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -48,8 +49,19 @@ public class videoPlayerActivity extends AppCompatActivity {
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                videoView.setVideoPath(String.valueOf(MainActivity.fileArrayList.get(position = position + 1)));
-                videoView.start();
+                //videoView.setVideoPath(String.valueOf(MainActivity.fileArrayList.get(position = position + 1)));
+                //videoView.start();
+                videoView.stopPlayback();
+
+            }
+        });
+        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                videoView.stopPlayback();
+                Toast.makeText(getApplicationContext(),"Oops An Error Occur While Playing Video...!", Toast.LENGTH_SHORT).show();
+// do something when an error is occur during the video playback
+                return false;
             }
         });
     }
@@ -59,11 +71,14 @@ public class videoPlayerActivity extends AppCompatActivity {
         super.onBackPressed();
         videoView.stopPlayback();
     }
+
     /**
      * This method is called when the user clicks the button to play the toady's
      * special video
      */
-    public void playMedia() {
+
+
+    public void setPath() {
         Uri file =  getIntent().getData();
         videoView.setVideoURI(file);
     }
