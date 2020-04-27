@@ -45,7 +45,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> implements F
          // for seting the file name
           holder.mFileName.setText(MainActivity.fileArrayList.get(position).getName());
           // for setting the thumbnail. glide is a framework for fast image/ gifs loading
-        Glide .with(context) .asBitmap() .load(Uri.fromFile(new File(MainActivity.fileArrayList.get(position).getPath()))) . into(holder.mVideoThumbnail);
+        Glide.with(context) .asBitmap() .load( Uri.fromFile(new File(MainActivity.fileArrayList.get(position).getPath()))) . into(holder.mVideoThumbnail);
        holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

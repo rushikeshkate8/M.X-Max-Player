@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     File directory;
     VideoAdapter videoAdapter;
     boolean permission;
+    boolean containsFile = false;
     public static int REQUEST_PERMISSION = 1;
     public static ArrayList<File> fileArrayList = new ArrayList<>();
     @Override
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
         }
     }
     /*
