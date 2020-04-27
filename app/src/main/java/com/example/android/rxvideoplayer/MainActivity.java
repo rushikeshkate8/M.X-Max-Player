@@ -1,23 +1,23 @@
 package com.example.android.rxvideoplayer;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.widget.SearchView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
-
 import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView videoList;
+    SearchView searchView;
     File directory;
     VideoAdapter videoAdapter;
     boolean permission;
@@ -35,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
         directory = new File("/mnt/");
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
         videoList.setLayoutManager(gridLayoutManager);
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(MainActivity.this, R.dimen.item_offset);
+        videoList.addItemDecoration(itemDecoration);
         videoPermissions();
+
     }
 
     private void videoPermissions() {
@@ -48,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             permission = true;
             getFileList(directory);
-            videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
-            videoList.setAdapter(videoAdapter);
         }
     }
     @Override
@@ -61,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
             {
                 permission = true;
                 getFileList(directory);
-                videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
-                videoList.setAdapter(videoAdapter);
+             /*   videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
+                videoList.setAdapter(videoAdapter); */
             }
             else
             {
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<File> getFileList(File directory)
     {
         File fileList[] = directory.listFiles();
+        ArrayList<File> filteredOutput = new ArrayList<>();
         if(fileList != null && fileList.length > 0)
         {
             for(int i = 0; i < fileList.length; i++)
@@ -86,33 +88,15 @@ public class MainActivity extends AppCompatActivity {
                     permission = false;
                     if(fileList[i].getName().endsWith(".mp4") || fileList[i].getName().endsWith(".3gp"))
                     {
-                        /*for(int j = 0; j < fileArrayList.size(); j++)
-                        {
-                            if(fileArrayList.get(j).getName().equals((fileList[i].getName())))   //can be removed
-                            {
-                                permission = true;
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                        if(permission)
-                        {
-                            permission = false;
-                        }
-                        else
-                        {*/
                             fileArrayList.add(fileList[i]);
-
-
                     }
                 }
             }
         }
-        return fileArrayList;
+
+        videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
+        videoList.setAdapter(videoAdapter);
+        return filteredOutput;
     }
-
-
 }
 

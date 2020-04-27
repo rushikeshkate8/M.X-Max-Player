@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">RX Player</string>
+    <string name="app_name">Video Player</string>
+    <string name="search">Search</string>
 </resources>
