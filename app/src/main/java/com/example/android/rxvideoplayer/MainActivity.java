@@ -3,6 +3,7 @@ package com.example.android.rxvideoplayer;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView videoList;
+    SearchView searchView;
     File directory;
     VideoAdapter videoAdapter;
     boolean permission;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         directory = new File("/mnt/");
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
         videoList.setLayoutManager(gridLayoutManager);
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(MainActivity.this, R.dimen.item_offset);
+        videoList.addItemDecoration(itemDecoration);
         videoPermissions();
 
     }
@@ -42,13 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
-
             }
         } else {
             permission = true;
             getFileList(directory);
-            videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
-            videoList.setAdapter(videoAdapter);
         }
     }
     @Override
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
             {
                 permission = true;
                 getFileList(directory);
-                videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
-                videoList.setAdapter(videoAdapter);
+             /*   videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
+                videoList.setAdapter(videoAdapter); */
             }
             else
             {
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<File> getFileList(File directory)
     {
         File fileList[] = directory.listFiles();
+        ArrayList<File> filteredOutput = new ArrayList<>();
         if(fileList != null && fileList.length > 0)
         {
             for(int i = 0; i < fileList.length; i++)
@@ -85,33 +87,15 @@ public class MainActivity extends AppCompatActivity {
                     permission = false;
                     if(fileList[i].getName().endsWith(".mp4"))
                     {
-                        /*for(int j = 0; j < fileArrayList.size(); j++)
-                        {
-                            if(fileArrayList.get(j).getName().equals((fileList[i].getName())))   //can be removed
-                            {
-                                permission = true;
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                        if(permission)
-                        {
-                            permission = false;
-                        }
-                        else
-                        {*/
                             fileArrayList.add(fileList[i]);
-
-
                     }
                 }
             }
         }
-        return fileArrayList;
+
+        videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
+        videoList.setAdapter(videoAdapter);
+        return filteredOutput;
     }
-
-
 }
 
