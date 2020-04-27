@@ -52,7 +52,6 @@ public class ExoPlayer extends AppCompatActivity {
         else
             setPath();
     }
-
     @Override
     public void onPause() {
         super.onPause();

@@ -80,12 +80,6 @@
         </intent-filter>
         </activity>
         <activity
-            android:name=".videoPlayerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="fullSensor">
-
-        </activity>
-        <activity
             android:name=".MainActivity"
             android:screenOrientation="nosensor">
         </activity>
