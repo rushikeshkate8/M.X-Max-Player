@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             permission = true;
-            getFileList(directory);
+            setFileList(directory);
+            configureAdapter();
         }
     }
     @Override
@@ -66,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             {
                 permission = true;
-                getFileList(directory);
+                setFileList(directory);
+                configureAdapter();
              /*   videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
                 videoList.setAdapter(videoAdapter); */
             }
@@ -76,7 +78,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
+    public void setFileList(File directory)
+    {
+        File fileList[] = directory.listFiles();
+        if(fileList != null && fileList.length > 0)
+        {
+            for(int i = 0; i < fileList.length; i++)
+            {
+                if(fileList[i].isDirectory())
+                {
+                    setFileList(fileList[i]);
+                }
+                else
+                {
+                    permission = false;
+                    if(fileList[i].getName().endsWith(".mp4") || fileList[i].getName().endsWith(".3gp"))
+                    {
+                        fileArrayList.add(fileList[i]);
+                    }
+                }
+            }
+        }
+    }
+    /*
     public ArrayList<File> getFileList(File directory)
     {
         File fileList[] = directory.listFiles();
@@ -102,7 +126,15 @@ public class MainActivity extends AppCompatActivity {
 
         videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
         videoList.setAdapter(videoAdapter);
-        return filteredOutput;
+        return fileArrayList;
     }
+    */
+
+    public void configureAdapter()
+    {
+        videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
+        videoList.setAdapter(videoAdapter);
+    }
+
 }
 
