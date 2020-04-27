@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     public ArrayList<File> getFileList(File directory)
     {
         File fileList[] = directory.listFiles();
