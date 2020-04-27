@@ -46,5 +46,9 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.7.2'
 
     compile 'gr.pantrif:easy-android-splash-screen:0.0.1'
-
+    //noinspection GradleCompatible
+    implementation 'com.android.support:animated-vector-drawable:27.1.1'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.github.plusCubed:recycler-fast-scroll:0.3.2'
 }
