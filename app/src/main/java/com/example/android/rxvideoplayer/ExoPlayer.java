@@ -47,7 +47,10 @@ public class ExoPlayer extends AppCompatActivity {
         // for showing the video on full screen
         getWindow().addFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN);
         position = getIntent().getIntExtra("position", -1);
-        videoUri = Uri.parse(String.valueOf(MainActivity.fileArrayList.get(position)));
+        if(position != -1)
+           videoUri = Uri.parse(String.valueOf(MainActivity.fileArrayList.get(position)));
+        else
+            setPath();
     }
 
     @Override
@@ -132,11 +135,10 @@ public class ExoPlayer extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
-
-
+    public void setPath() {
+        videoUri = getIntent().getData();
     }
-   /* public void setPath() {
-        Uri file =  getIntent().getData();
-        videoView.setVideoURI(file);
-    }*/
+    }
+
+
 

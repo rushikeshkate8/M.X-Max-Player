@@ -1,3 +1,4 @@
+
 <resources>
 
     <!-- Base application theme. -->
@@ -6,5 +7,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="Theme.MyAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowDisablePreview">true</item>
     </style>
 </resources>

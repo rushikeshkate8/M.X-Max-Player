@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,14 +20,16 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 import java.util.ArrayList;
 
-public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> {
+public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> implements Filterable {
     @NonNull
     private Context context;
     private ArrayList<File> videoArrayList;
+    public static ArrayList<File> videoArrayListFull;
 
     VideoAdapter(@NonNull Context context, ArrayList<File> videoArrayList) {
         this.context = context;
         this.videoArrayList = videoArrayList;
+        videoArrayListFull = new ArrayList<>(videoArrayList);
     }
 
     @NonNull
@@ -60,6 +64,43 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> {
         else
             return 1;
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<File> filteredList = new ArrayList();                    //here can be the problem
+            if(constraint == null || constraint.length() == 0)
+                filteredList.addAll(videoArrayListFull);
+            else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (File item: videoArrayListFull)
+                {
+                    if(item.getName().toLowerCase().contains(filterPattern ))
+                    {
+                        filteredList.add(item);
+                    }
+                }
+                if(filteredList.isEmpty())
+                {
+                    filteredList = new ArrayList<>(videoArrayListFull);
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint , FilterResults results) {
+            videoArrayList.clear();
+            videoArrayList.addAll((ArrayList)results.values);    //Array list can generate error
+            notifyDataSetChanged();
+        }
+    };
 }
 class VideoHolder extends RecyclerView.ViewHolder{
     TextView mFileName;
