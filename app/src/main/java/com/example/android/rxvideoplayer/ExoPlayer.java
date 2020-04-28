@@ -40,7 +40,7 @@ public class ExoPlayer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_exo_player );
+        setContentView( R.layout.activity_exo_player);
         // for showing the video on full screen
         getWindow().addFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN );
         position = getIntent().getIntExtra( "position" , -1 );

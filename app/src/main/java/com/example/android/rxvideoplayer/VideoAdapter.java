@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -26,10 +26,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> implements F
     private ArrayList<File> videoArrayList;
     public static ArrayList<File> videoArrayListFull;
 
+
     VideoAdapter(@NonNull Context context, ArrayList<File> videoArrayList) {
         this.context = context;
         this.videoArrayList = videoArrayList;
         videoArrayListFull = new ArrayList<>(videoArrayList);
+
     }
 
     @NonNull
@@ -105,7 +107,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> implements F
 class VideoHolder extends RecyclerView.ViewHolder{
     TextView mFileName;
     ImageView mVideoThumbnail;
-    CardView mCardView;
+   LinearLayout mCardView;
     VideoHolder(View view)
     {
         super(view);
