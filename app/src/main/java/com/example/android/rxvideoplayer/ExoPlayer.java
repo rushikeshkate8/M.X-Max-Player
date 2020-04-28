@@ -25,8 +25,12 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 public class ExoPlayer extends AppCompatActivity {
+    private AdView mAdView;
     int position = -1;
     public com.google.android.exoplayer2.ExoPlayer player;
     SimpleExoPlayerView simpleExoPlayerView;
@@ -50,12 +54,17 @@ public class ExoPlayer extends AppCompatActivity {
         intent.putExtra( "position" , position );
         intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
         ExoPlayer.this.startActivity( intent );
+       // imaAdsLoader = new ImaAdsLoader(this, getAdTagUri());
     }
 
         if(position != -1)
            videoUri = Uri.parse(String.valueOf(MainActivity.fileArrayList.get(position)));
         else
             setPath();
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        mAdView = findViewById(R.id.adViewPlayer);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
     @Override
     public void onPause() {

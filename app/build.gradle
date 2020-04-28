@@ -47,4 +47,6 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.github.plusCubed:recycler-fast-scroll:0.3.2'
+    implementation 'com.google.android.gms:play-services-ads:19.1.0'
+    compile 'com.google.android.exoplayer:extension-ima:2.8.1'
 }

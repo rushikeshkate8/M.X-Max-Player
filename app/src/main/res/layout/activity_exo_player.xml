@@ -19,6 +19,16 @@
             android:id="@+id/exoplayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            app:resize_mode="fill"/>
     </FrameLayout>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewPlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        tools:visibility="visible"></com.google.android.gms.ads.AdView>
 </RelativeLayout>

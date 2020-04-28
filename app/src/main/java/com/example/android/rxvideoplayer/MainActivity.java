@@ -18,12 +18,16 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.pluscubed.recyclerfastscroll.RecyclerFastScroller;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private AdView mAdView;
     RecyclerView videoList;
     SearchView searchView;
     File directory;
@@ -49,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
         videoPermissions();
         RecyclerFastScroller recyclerFastScroller = findViewById(R.id.fastScroller);
         recyclerFastScroller.attachRecyclerView(videoList);
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     private void videoPermissions() {

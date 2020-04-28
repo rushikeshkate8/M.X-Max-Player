@@ -4,6 +4,7 @@
     package="com.example.android.rxvideoplayer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -18,7 +19,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544/6300978111"/>
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
         <activity android:name=".ExoPlayer"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="fullSensor">
