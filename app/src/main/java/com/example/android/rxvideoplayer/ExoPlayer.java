@@ -1,14 +1,13 @@
 package com.example.android.rxvideoplayer;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
@@ -42,11 +41,17 @@ public class ExoPlayer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_exo_player );
-        ActivityCompat.requestPermissions(ExoPlayer.this, new String[]{Manifest.permission.WRITE_SETTINGS}, REQUEST_PERMISSION);
-        ActivityCompat.requestPermissions(ExoPlayer.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         // for showing the video on full screen
-        getWindow().addFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        position = getIntent().getIntExtra("position", -1);
+        getWindow().addFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN );
+        position = getIntent().getIntExtra( "position" , -1 );
+       if (Util.SDK_INT <=25)
+    {
+        Intent intent = new Intent( ExoPlayer.this , VideoPlayerActivity.class );
+        intent.putExtra( "position" , position );
+        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
+        ExoPlayer.this.startActivity( intent );
+    }
+
         if(position != -1)
            videoUri = Uri.parse(String.valueOf(MainActivity.fileArrayList.get(position)));
         else
@@ -134,9 +139,11 @@ public class ExoPlayer extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
+
     public void setPath() {
         videoUri = getIntent().getData();
     }
+
     }
 
 

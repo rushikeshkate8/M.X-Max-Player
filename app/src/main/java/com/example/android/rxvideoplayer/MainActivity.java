@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     permission = false;
-                    if(fileList[i].getName().endsWith(".mp4") || fileList[i].getName().endsWith(".3gp"))
+                    if(fileList[i].getName().endsWith(".mp4") || fileList[i].getName().endsWith(".3gp")||fileList[i].getName().endsWith(".avi")||fileList[i].getName().endsWith(".webm")||fileList[i].getName().endsWith(".3gpp")||fileList[i].getName().endsWith(".3gpp2")||fileList[i].getName().endsWith(".webm")||fileList[i].getName().endsWith(".mkv"))
                     {
                         fileArrayList.add(fileList[i]);
                     }
@@ -139,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
     {
         videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
         videoList.setAdapter(videoAdapter);
+        ProgressBar progressBar = findViewById( R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -165,4 +169,3 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 }
-
