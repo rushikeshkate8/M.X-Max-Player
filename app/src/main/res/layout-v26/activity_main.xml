@@ -5,21 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".MainActivity">
-
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_centerInParent="true"/>
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     >
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="18dp"
         android:id="@+id/video_list">
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -28,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        app:rfs_handleNormalColor="@android:color/white"
         app:rfs_handlePressedColor="@color/colorPrimary"/>
 </FrameLayout>
 
@@ -40,6 +34,12 @@
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        tools:visibility="visible"></com.google.android.gms.ads.AdView>
+        tools:visibility="visible" />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:visibility="visible"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>
 

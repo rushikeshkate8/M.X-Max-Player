@@ -2,29 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingBottom="22dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/video_cardView">
-
+    android:id="@+id/video_cardView"
+    android:layout_marginBottom="12dp">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:weightSum="8">
+        android:orientation="vertical">
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="202dp"
+            android:layout_width="152dp"
+            android:layout_height="82dp"
             android:scaleType="centerCrop"
             android:layout_gravity="center"
             android:id="@+id/video_thumbnail"
             android:background="@android:color/black"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="151dp"
             android:layout_height="wrap_content"
             android:id="@+id/video_file_name"
-            android:paddingTop="6dp"
-            android:paddingHorizontal="16dp"
+            android:padding="4dp"
             android:maxLines="2"
             android:alpha="1"
             android:elevation="0dp"

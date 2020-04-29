@@ -61,7 +61,7 @@ public class ExoPlayer extends AppCompatActivity {
            videoUri = Uri.parse(String.valueOf(MainActivity.fileArrayList.get(position)));
         else
             setPath();
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        MobileAds.initialize(this, "ca-app-pub-6301359771562604/5236326991");
         mAdView = findViewById(R.id.adViewPlayer);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -148,7 +148,6 @@ public class ExoPlayer extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
-
     public void setPath() {
         videoUri = getIntent().getData();
     }

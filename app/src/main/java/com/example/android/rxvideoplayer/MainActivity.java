@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         videoList.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
         // to read media from internal and external memory
         directory = new File("/mnt/");
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
         videoList.setLayoutManager(gridLayoutManager);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(MainActivity.this, R.dimen.item_offset);
         videoList.addItemDecoration(itemDecoration);

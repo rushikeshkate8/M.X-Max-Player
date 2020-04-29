@@ -9,24 +9,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
+        android:visibility="visible"
         android:layout_centerInParent="true"/>
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/video_list">
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <com.pluscubed.recyclerfastscroll.RecyclerFastScroller
-        android:id="@+id/fastScroller"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="end"
-        app:rfs_handleNormalColor="@android:color/white"
-        app:rfs_handlePressedColor="@color/colorPrimary"/>
-</FrameLayout>
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:id="@+id/video_list">
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.pluscubed.recyclerfastscroll.RecyclerFastScroller
+            android:id="@+id/fastScroller"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            app:rfs_handlePressedColor="@color/colorPrimary"/>
+    </FrameLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        tools:visibility="visible" />
 </RelativeLayout>
 
