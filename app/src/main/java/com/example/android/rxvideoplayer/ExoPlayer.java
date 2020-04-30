@@ -9,15 +9,21 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
@@ -26,11 +32,10 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.InterstitialAd;
 
-public class ExoPlayer extends AppCompatActivity {
-    private AdView mAdView;
+public class ExoPlayer extends AppCompatActivity implements Player.EventListener {
+    private InterstitialAd interstitialAd;
     int position = -1;
     public com.google.android.exoplayer2.ExoPlayer player;
     SimpleExoPlayerView simpleExoPlayerView;
@@ -61,10 +66,7 @@ public class ExoPlayer extends AppCompatActivity {
            videoUri = Uri.parse(String.valueOf(MainActivity.fileArrayList.get(position)));
         else
             setPath();
-        MobileAds.initialize(this, "ca-app-pub-6301359771562604/5236326991");
-        mAdView = findViewById(R.id.adViewPlayer);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        prepareAd();
     }
     @Override
     public void onPause() {
@@ -80,6 +82,7 @@ public class ExoPlayer extends AppCompatActivity {
         if (Util.SDK_INT >= 24) {
             releasePlayer();
         }
+
     }
     private void initializePlayer(){
         // Create a default TrackSelector
@@ -105,6 +108,25 @@ public class ExoPlayer extends AppCompatActivity {
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
         player.prepare(videoSource, false, false);
+        player.addListener( this );
+       /* ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        scheduledExecutorService.scheduleAtFixedRate( new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread( new Runnable() {
+                    @Override
+                    public void run() {
+                        if(interstitialAd.isLoaded())
+                        {   //player.setPlayWhenReady( false );
+                            player.setPlayWhenReady( false );
+                            interstitialAd.show();
+                            prepareAd();
+
+                        }
+                    }
+                });
+            }
+        }, 10, 10, TimeUnit.MINUTES);*/
         // Prepare the player with the source.
     }
 
@@ -152,7 +174,67 @@ public class ExoPlayer extends AppCompatActivity {
         videoUri = getIntent().getData();
     }
 
+    public void prepareAd()
+    {
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        interstitialAd.loadAd( new AdRequest.Builder().build());
     }
+
+    @Override
+    public void onTimelineChanged(Timeline timeline , Object manifest , int reason) {
+
+    }
+
+    @Override
+    public void onTracksChanged(TrackGroupArray trackGroups , TrackSelectionArray trackSelections) {
+
+    }
+
+    @Override
+    public void onLoadingChanged(boolean isLoading) {
+
+    }
+
+    @Override
+    public void onPlayerStateChanged(boolean playWhenReady , int playbackState) {
+            if(!player.getPlayWhenReady())
+           {
+                interstitialAd.show();
+                prepareAd();
+          }
+
+    }
+
+    @Override
+    public void onRepeatModeChanged(int repeatMode) {
+
+    }
+
+    @Override
+    public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+
+    }
+
+    @Override
+    public void onPlayerError(ExoPlaybackException error) {
+
+    }
+
+    @Override
+    public void onPositionDiscontinuity(int reason) {
+
+    }
+
+    @Override
+    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+    }
+    @Override
+    public void onSeekProcessed() {
+
+    }
+}
 
 
 

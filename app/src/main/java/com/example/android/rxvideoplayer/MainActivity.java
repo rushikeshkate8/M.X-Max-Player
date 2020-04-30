@@ -20,20 +20,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.pluscubed.recyclerfastscroll.RecyclerFastScroller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     private AdView mAdView;
+    InterstitialAd interstitialAd;
     RecyclerView videoList;
-    SearchView searchView;
     File directory;
     VideoAdapter videoAdapter;
     boolean permission;
-    boolean containsFile = false;
     public static int REQUEST_PERMISSION = 1;
     public static ArrayList<File> fileArrayList = new ArrayList<>();
     @Override
@@ -53,10 +56,26 @@ public class MainActivity extends AppCompatActivity {
         videoPermissions();
         RecyclerFastScroller recyclerFastScroller = findViewById(R.id.fastScroller);
         recyclerFastScroller.attachRecyclerView(videoList);
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
         mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+       prepareAd();
+       prepareInterstitialAd();
+        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        scheduledExecutorService.scheduleAtFixedRate( new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread( new Runnable() {
+                    @Override
+                    public void run() {
+                        if(interstitialAd.isLoaded())
+                        {   //player.setPlayWhenReady( false );
+                            interstitialAd.show();
+                            prepareInterstitialAd();
+                        }
+                    }
+                });
+            }
+        }, 5, 60, TimeUnit.SECONDS);
     }
 
     private void videoPermissions() {
@@ -174,5 +193,17 @@ public class MainActivity extends AppCompatActivity {
             }
         } );
         return true;
+    }
+    public void prepareAd()
+    {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+    }
+    public void prepareInterstitialAd()
+    {
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        interstitialAd.loadAd( new AdRequest.Builder().build());
     }
 }
