@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         videoPermissions();
         RecyclerFastScroller recyclerFastScroller = findViewById(R.id.fastScroller);
         recyclerFastScroller.attachRecyclerView(videoList);
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
+        MobileAds.initialize(this, "ca-app-pub-6301359771562604/5236326991");
         mAdView = findViewById(R.id.adView);
        prepareAd();
        prepareInterstitialAd();
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
     public void prepareInterstitialAd()
     {
         interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        interstitialAd.setAdUnitId("ca-app-pub-6301359771562604/1933244919");
         interstitialAd.loadAd( new AdRequest.Builder().build());
     }
 }

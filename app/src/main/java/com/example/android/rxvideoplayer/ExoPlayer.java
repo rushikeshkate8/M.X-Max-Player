@@ -139,7 +139,7 @@ public class ExoPlayer extends AppCompatActivity implements Player.EventListener
     public void prepareAd()
     {
         interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        interstitialAd.setAdUnitId("ca-app-pub-6301359771562604/1933244919");
         interstitialAd.loadAd( new AdRequest.Builder().build());
     }
 
