@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-        }, 5, 60, TimeUnit.SECONDS);
+        }, 1, 60, TimeUnit.SECONDS);
     }
 
     private void videoPermissions() {

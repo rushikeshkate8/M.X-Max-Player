@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 
 import java.io.File;
@@ -44,7 +46,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> implements F
 
           holder.mFileName.setText(MainActivity.fileArrayList.get(position).getName());
         Glide.with(context) .asBitmap() .load( Uri.fromFile(new File(MainActivity.fileArrayList.get(position).getPath()))) . into(holder.mVideoThumbnail);
-       holder.mCardView.setOnClickListener(new View.OnClickListener() {
+       holder.mItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ExoPlayer.class);
@@ -103,12 +105,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> implements F
 class VideoHolder extends RecyclerView.ViewHolder{
     TextView mFileName;
     ImageView mVideoThumbnail;
-   LinearLayout mCardView;
+    RelativeLayout mItem;
     VideoHolder(View view)
     {
         super(view);
         mFileName = view.findViewById(R.id.video_file_name);
         mVideoThumbnail = view.findViewById(R.id.video_thumbnail);
-        mCardView = view.findViewById(R.id.video_cardView);
+        mItem = view.findViewById(R.id.video_cardView);
     }
 }
