@@ -1,7 +1,6 @@
 package com.example.android.rxvideoplayer;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -42,9 +41,7 @@ public class ExoPlayer extends AppCompatActivity implements Player.EventListener
     private boolean playWhenReady = true;
     private int currentWindow = 0;
     private long playbackPosition = 0;
-    public static final int REQUEST_PERMISSION = 1;
     Uri videoUri;
-//   from here delete
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +50,6 @@ public class ExoPlayer extends AppCompatActivity implements Player.EventListener
         // for showing the video on full screen
         getWindow().addFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN );
         position = getIntent().getIntExtra( "position" , -1 );
-       if (Util.SDK_INT <=25)
-    {
-        Intent intent = new Intent( ExoPlayer.this , VideoPlayerActivity.class );
-        intent.putExtra( "position" , position );
-        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
-        ExoPlayer.this.startActivity( intent );
-       // imaAdsLoader = new ImaAdsLoader(this, getAdTagUri());
-    }
 
         if(position != -1)
            videoUri = Uri.parse(String.valueOf(MainActivity.fileArrayList.get(position)));
@@ -85,53 +74,26 @@ public class ExoPlayer extends AppCompatActivity implements Player.EventListener
 
     }
     private void initializePlayer(){
-        // Create a default TrackSelector
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory =
                 new AdaptiveTrackSelection.Factory(bandwidthMeter);
         TrackSelector trackSelector =
                 new DefaultTrackSelector(videoTrackSelectionFactory);
-        //Initialize the player
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
-        //Initialize simpleExoPlayerView
         simpleExoPlayerView = findViewById(R.id.exoplayer);
         simpleExoPlayerView.setPlayer(player);
-        // Produces DataSource instances through which media data is loaded.
+
         DataSource.Factory dataSourceFactory =
                 new DefaultDataSourceFactory(this, Util.getUserAgent(this, "CloudinaryExoplayer"));
-        // Produces Extractor instances for parsing the media data.
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-        // This is the MediaSource representing the media to be played.
-        //MediaSource videoSource = new ExtractorMediaSource(videoUri,
-            //    dataSourceFactory, extractorsFactory, null, null);
         MediaSource videoSource = buildMediaSource(videoUri, dataSourceFactory, extractorsFactory);
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
         player.prepare(videoSource, false, false);
         player.addListener( this );
-       /* ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        scheduledExecutorService.scheduleAtFixedRate( new Runnable() {
-            @Override
-            public void run() {
-                runOnUiThread( new Runnable() {
-                    @Override
-                    public void run() {
-                        if(interstitialAd.isLoaded())
-                        {   //player.setPlayWhenReady( false );
-                            player.setPlayWhenReady( false );
-                            interstitialAd.show();
-                            prepareAd();
-
-                        }
-                    }
-                });
-            }
-        }, 10, 10, TimeUnit.MINUTES);*/
-        // Prepare the player with the source.
     }
 
     private MediaSource buildMediaSource(Uri uri, DataSource.Factory dataSourceFactory, ExtractorsFactory extractorsFactory) {
-        // These factories are used to construct two media sources below
         MediaSource videoSource1 = new ExtractorMediaSource(uri,
                 dataSourceFactory, extractorsFactory, null, null);
         MediaSource videoSource2 = new ExtractorMediaSource(uri,

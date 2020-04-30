@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -39,10 +40,13 @@ public class MainActivity extends AppCompatActivity {
     boolean permission;
     public static int REQUEST_PERMISSION = 1;
     public static ArrayList<File> fileArrayList = new ArrayList<>();
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toolbar = findViewById( R.id.toolBar );
+        setSupportActionBar( toolbar );
         videoList = findViewById(R.id.video_list);
         videoList.setItemViewCacheSize(20);
         videoList.setDrawingCacheEnabled(true);
@@ -51,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
         directory = new File("/mnt/");
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
         videoList.setLayoutManager(gridLayoutManager);
-        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(MainActivity.this, R.dimen.item_offset);
-        videoList.addItemDecoration(itemDecoration);
         videoPermissions();
         RecyclerFastScroller recyclerFastScroller = findViewById(R.id.fastScroller);
         recyclerFastScroller.attachRecyclerView(videoList);
@@ -101,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 permission = true;
                 setFileList(directory);
                 configureAdapter();
-             /*   videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
-                videoList.setAdapter(videoAdapter); */
             }
             else
             {
@@ -133,35 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-    /*
-    public ArrayList<File> getFileList(File directory)
-    {
-        File fileList[] = directory.listFiles();
-        ArrayList<File> filteredOutput = new ArrayList<>();
-        if(fileList != null && fileList.length > 0)
-        {
-            for(int i = 0; i < fileList.length; i++)
-            {
-                if(fileList[i].isDirectory())
-                {
-                    getFileList(fileList[i]);
-                }
-                else
-                {
-                    permission = false;
-                    if(fileList[i].getName().endsWith(".mp4") || fileList[i].getName().endsWith(".3gp"))
-                    {
-                            fileArrayList.add(fileList[i]);
-                    }
-                }
-            }
-        }
-
-        videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
-        videoList.setAdapter(videoAdapter);
-        return fileArrayList;
-    }
-    */
 
     public void configureAdapter()
     {
