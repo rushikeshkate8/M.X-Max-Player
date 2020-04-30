@@ -40,11 +40,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> implements F
     }
 
     @Override
-    // for showing the file name and thumbnail
     public void onBindViewHolder(@NonNull final VideoHolder holder, int position) {
-         // for seting the file name
+
           holder.mFileName.setText(MainActivity.fileArrayList.get(position).getName());
-          // for setting the thumbnail. glide is a framework for fast image/ gifs loading
         Glide.with(context) .asBitmap() .load( Uri.fromFile(new File(MainActivity.fileArrayList.get(position).getPath()))) . into(holder.mVideoThumbnail);
        holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +70,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> implements F
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<File> filteredList = new ArrayList();                    //here can be the problem
+            ArrayList<File> filteredList = new ArrayList();
             if(constraint == null || constraint.length() == 0)
                 filteredList.addAll(videoArrayListFull);
             else {
@@ -97,7 +95,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> implements F
         @Override
         protected void publishResults(CharSequence constraint , FilterResults results) {
             videoArrayList.clear();
-            videoArrayList.addAll((ArrayList)results.values);    //Array list can generate error
+            videoArrayList.addAll((ArrayList)results.values);
             notifyDataSetChanged();
         }
     };

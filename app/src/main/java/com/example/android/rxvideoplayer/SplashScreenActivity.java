@@ -19,19 +19,10 @@ import gr.net.maroulis.library.EasySplashScreen;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
-
-
-
   @Override
-
   protected void onCreate(Bundle savedInstanceState) {
-
     super.onCreate(savedInstanceState);
-
-
-
     EasySplashScreen config = new EasySplashScreen(SplashScreenActivity.this)
-
             .withFullScreen()
 
             .withTargetActivity(MainActivity.class)
