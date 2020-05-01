@@ -1,4 +1,4 @@
-package com.example.android.rxvideoplayer;
+package player.android.rxvideoplayer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -37,7 +37,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoHolder> implements F
     @NonNull
     @Override
     public VideoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mview = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_item, parent, false);
+        View mview = LayoutInflater.from(parent.getContext()).inflate( R.layout.video_item, parent, false);
         return new VideoHolder(mview);
     }
 

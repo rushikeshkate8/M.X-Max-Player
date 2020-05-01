@@ -1,22 +1,11 @@
-package com.example.android.rxvideoplayer;
-
+package player.android.rxvideoplayer;
 
 
 import android.graphics.Color;
-
 import android.os.Bundle;
-
 import android.view.View;
-
-
-
 import androidx.appcompat.app.AppCompatActivity;
-
-
-
 import gr.net.maroulis.library.EasySplashScreen;
-
-
 
 public class SplashScreenActivity extends AppCompatActivity {
   @Override
@@ -31,7 +20,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             .withBackgroundColor(Color.parseColor("#FFFFFF"))
 
-            .withLogo(R.drawable.ic_play_circle_filled_black_24dp);
+            .withLogo( R.drawable.ic_play_circle_filled_black_24dp);
     View easySplashScreen = config.create();
     setContentView(easySplashScreen);
   }

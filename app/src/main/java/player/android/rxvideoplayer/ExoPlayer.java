@@ -1,4 +1,4 @@
-package com.example.android.rxvideoplayer;
+package player.android.rxvideoplayer;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -33,6 +32,8 @@ import com.google.android.exoplayer2.util.Util;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
+
+
 public class ExoPlayer extends AppCompatActivity implements Player.EventListener {
     private InterstitialAd interstitialAd;
     int position = -1;
@@ -52,7 +53,7 @@ public class ExoPlayer extends AppCompatActivity implements Player.EventListener
         position = getIntent().getIntExtra( "position" , -1 );
 
         if(position != -1)
-           videoUri = Uri.parse(String.valueOf(MainActivity.fileArrayList.get(position)));
+           videoUri = Uri.parse(String.valueOf( MainActivity.fileArrayList.get(position)));
         else
             setPath();
         prepareAd();
@@ -139,7 +140,7 @@ public class ExoPlayer extends AppCompatActivity implements Player.EventListener
     public void prepareAd()
     {
         interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId("ca-app-pub-6301359771562604/1933244919");
+        interstitialAd.setAdUnitId("ca-app-pub-6301359771562604/9828294224");
         interstitialAd.loadAd( new AdRequest.Builder().build());
     }
 

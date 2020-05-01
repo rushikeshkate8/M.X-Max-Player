@@ -1,4 +1,4 @@
-package com.example.android.rxvideoplayer;
+package player.android.rxvideoplayer;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView( R.layout.activity_main);
         toolbar = findViewById( R.id.toolBar );
         setSupportActionBar( toolbar );
         videoList = findViewById(R.id.video_list);
