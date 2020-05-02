@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -35,9 +37,12 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     private AdView mAdView;
+    SwipeRefreshLayout swipeRefreshLayout;
+    boolean doubleBackPressed;
     InterstitialAd interstitialAd;
     RecyclerView videoList;
     File directory;
+    SearchView searchView;
     VideoAdapter videoAdapter;
     boolean permission;
     public static int REQUEST_PERMISSION = 1;
@@ -80,6 +85,17 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }, 1, 60, TimeUnit.SECONDS);
+        swipeRefreshLayout = findViewById( R.id.swipe_refresh_layout );
+        swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fileArrayList.clear();
+                setFileList(directory);
+                configureAdapter();
+                searchView.setQuery( "", true );
+                swipeRefreshLayout.setRefreshing( false );
+            }
+        } );
     }
 
     private void videoPermissions() {
@@ -136,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     public void configureAdapter()
     {
         videoAdapter = new VideoAdapter(getApplicationContext(), fileArrayList);
@@ -149,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.example_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView = (SearchView) searchItem.getActionView();
         searchView.onActionViewExpanded();
         searchView.setIconifiedByDefault(false);
         searchView.setQueryHint("Search videos");
@@ -178,10 +195,28 @@ public class MainActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
     }
-    public void prepareInterstitialAd()
-    {
-        interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId("ca-app-pub-6301359771562604/1933244919");
-        interstitialAd.loadAd( new AdRequest.Builder().build());
+    public void prepareInterstitialAd() {
+        interstitialAd = new InterstitialAd( this );
+        interstitialAd.setAdUnitId( "ca-app-pub-6301359771562604/1933244919" );
+        interstitialAd.loadAd( new AdRequest.Builder().build() );
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(doubleBackPressed)
+        {
+            super.onBackPressed();
+            return;
+        }
+        searchView.setQuery( "",true );
+        doubleBackPressed = true;
+        Toast.makeText( this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed( new Runnable() {
+            @Override
+            public void run() {
+                doubleBackPressed = false;
+            }
+        }, 2000);
     }
 }

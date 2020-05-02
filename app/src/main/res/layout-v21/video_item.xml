@@ -21,7 +21,6 @@
             android:padding="4dp"
             android:maxLines="2"
             android:alpha="1"
-            android:elevation="0dp"
             android:textColor="#FF35344C"
             android:textSize="15sp"
             android:layout_below="@id/video_thumbnail"
